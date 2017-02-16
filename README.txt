@@ -1,4 +1,4 @@
-This is a folder of all homework and labs for computational biology. This class in taught by Sam Flaxman in Spring of 2017. This directory will contain a bunch of practice files, and resources to refer back to later.
+This is a folder of all homework and labs for computational biology. This class is taught by Sam Flaxman in Spring of 2017. This directory will contain a bunch of practice files, and resources to refer back to later.
 
 The Labs folder will contain work from the Friday lab component of the class. 
 
