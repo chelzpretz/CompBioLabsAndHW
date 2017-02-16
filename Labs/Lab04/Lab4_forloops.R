@@ -82,3 +82,18 @@ time <- 1:12
 
 plot(x=time, y=popabund, main="Growth Rate over Time", xlab="Generations", ylab="Population Size")
 abline(a=1, b=12, h=K, col="red", lwd=3)
+
+#Step 4: Downloaded file from Sam's github, lab 4 folder.  
+#4a: Read data into r
+setwd("/Users/Chelsea/Documents/ComputationalBiology/Labs/Lab04/")
+emissions <- read.csv("/Users/Chelsea/Documents/ComputationalBiology/Labs/Lab04/CO2_data_cut_paste.csv")
+colnames(emissions)
+
+#4b: Find percent change between years of everything except year
+percentMax <- matrix(NA, nrow=265, ncol= 8) 
+
+for(i in 2:ncol(emissions)){
+  for(j in 2:nrow(emissions)){
+    percentMax[j, i] <- (((emissions[(j - 1), i])-emissions[j, i]) - emissions[j,i]) * 100
+  }
+}
