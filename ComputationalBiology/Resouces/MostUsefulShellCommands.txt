@@ -1,0 +1,31 @@
+MostUsefulShellCommands:
+
+ls	list the contents in directory
+cd	change directory, must add directory name or will be taken to root directory, .. moves to one level up
+pwd	prints working directory 
+mv	copies or mv file, must be follow by actionfile movetocopytofile 
+gedit	opens text editor, must follow with file name, if its a new file name it makes a new 
+notepad	opens notepad on WINDOWS
+touch	creates file on MAC
+open	opens file on MAC
+rm 	removes file
+rmdir	removes directory
+
+GitCommands:
+
+git clone https:fileurl	This copies a directory from online
+git status	gives the current status about git
+git init	initiates git for use
+git add filename	This puts file in staging area
+git commit -m “message”	This commits what is in the staging area. DO NOT forget to add message
+git log	shows you past commits in git
+git diff	Shows the difference that have been made since the last commit
+git revert	Undoes commit
+
+git config --global user.email "youremail.com" 	
+git config --global user.name "yourusername"
+
+git remote add origin [url]	this designates online repot
+git push -u origin master	this pushes local git repot online
+
+

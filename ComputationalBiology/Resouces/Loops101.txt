@@ -1,0 +1,62 @@
+Loops, Conditions, and Inputs in R
+
+FOR LOOPS:
+There are 3 main components of a loop:
+1. Counter / index variable
+2. Range of value for counter
+3. Action / operation
+
+for(i in 1:10){
+	Operation
+}
+
+Helpful commands:
+seq(from = 1, to = 10, by = 2) #makes list of numbers
+rep()			       #Makes list of numbers
+vector()			#Makes a vector (list of numbers)
+matrix()			#Makes a matrix
+dim()				#Gives diminations of 
+
+Pre-allocation is better than dynmaic array sizing because it is faster.
+
+NESTED LOOPS:
+You can make loops go down a row
+
+for(i in 1:ncol()){
+	for(j in 1:ncol(){
+		mymartrix[j, i] <- some operation
+	}
+} 
+
+Helpful commands:
+write.csv(x=myData, file="Newfile"") 	#can save data into a new file
+
+
+IF .. ELSE STATEMENTS
+If statements are conditional statements. If something is true then do X. 
+
+if(condition){
+	operation(s)
+} else { 		#else has to be on the same line as } from for statement
+	other operations
+}
+
+Helpful commands:
+[[]] 	#double brackets mean the whole row
+== 	#if is equal to this value
+>=; <= 	#Greater/less than or equal to
+>;<	#Greater/less than
+&	#And
+!=	#not equal to 
+
+WHILE STATEMENTS
+Can help pull out or subset data.
+
+which(is.na(vector)) #pulls al the NA in a data set
+lenght(which(is.na(vector))) #give number of NAs in data set
+NAindices <- which(is.na(vector)) #assigns all NA value to a new vector
+vector[NAindice] <- 0 #changes all NA to zero
+
+which(data > 5 & data < 10) #pulls out all values from 5 to 10
+
+
