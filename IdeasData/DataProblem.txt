@@ -1,0 +1,15 @@
+This is a document that outlines the question and data that I am interested in solving
+using compuationally.
+
+The Problem:
+Filtering data from a aggerated herbarium website to later use in niche modeling programs. 
+
+The data:
+The raw data has been downloaded from SIENet, and contains many different rows of information 
+that varies from: species name, collector, location, ect. The document will include the whole 
+genus, Physalis, but would want to filter one species at a time. 
+
+The approach:
+Filter by species (have at top of file so can be changed)
+Filter to only have long/lat
+Remove all individuals that do not have long/lat information 
