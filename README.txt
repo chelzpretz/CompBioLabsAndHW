@@ -19,4 +19,4 @@ The IdeasData folder, contains an issue I want to address compuationally.
 
 Documents included:
 Dataproblem.txt contains an overview of an issue I would like to address
-Physalis.csv aggrated herbaium specimen data from SIENet.
+Physalis.csv aggregated herbaium specimen data from SIENet.

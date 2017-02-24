@@ -2,7 +2,7 @@ This is a document that outlines the question and data that I am interested in s
 using compuationally.
 
 The Problem:
-Filtering data from a aggerated herbarium website to later use in niche modeling programs. 
+Filtering data from a aggregated herbarium website to later use in niche modeling programs. 
 
 The data:
 The raw data has been downloaded from SIENet, and contains many different rows of information 
