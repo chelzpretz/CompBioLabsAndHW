@@ -55,11 +55,11 @@ row.names(df2) <- episode
 
 #lab step 16
 #Pulling out the thrid row from step 10
-movieRanks[3, 1:5]
+movieRanks[3, ]
 
 #lab step 17
 #Pulling out the forth row from step 12
-dataFrame_ranks[4, 1:5]
+dataFrame_ranks[4, ]
 
 #Step 18
 #Pulling out my ranking for Episode V

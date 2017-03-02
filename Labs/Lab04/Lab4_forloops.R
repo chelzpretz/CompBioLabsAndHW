@@ -27,20 +27,20 @@ shrinkingrate <- .05
 
 for(i in 1:7){
   popsize <- popsize - (popsize*shrinkingrate)
-  cat(i ) 
-  pring(popsize)
+  cat(i) 
+  print(popsize)
 }
 
 #Step 4-modeling population growth  
 #n[t] = n[t -1] + (r * n [t-1] * (K - n[t-1])/K))
 #n[t] = abundance t= time r= rate K= carrying capacity 
 
-K <- 10000
-r <- 0.8
-popabund <- rep(NA, 12)
-popabund[1] <- 2500
+K <- 10000  #environmental carrying capacity for the population
+r <- 0.8    #intrinsic growth rate of the population
+popabund <- rep(NA, 12) #empty container to hold population abundence
+popabund[1] <- 2500   #Adding the first year of population abundence 
 
-
+#a for loop to caculate the population adundence over time with intrunsic rate 
 for(i in 2:12){
   popabund[i] <- popabund[i-1] + (r * popabund[i-1] * (K - popabund[i-1])/K)
   print(popabund[i])
@@ -72,7 +72,7 @@ for(i in 2:18){
 #Step 2: make a for loop that displays the first 20 Fibonacci numbers
 fib <- rep(1, 20)
 
-for(i in 2:20){
+for(i in 2:19){
   fib[i+1] <- fib[i-1] + fib[i]
 }
 
@@ -90,10 +90,12 @@ emissions <- read.csv("/Users/Chelsea/Documents/ComputationalBiology/Labs/Lab04/
 colnames(emissions)
 
 #4b: Find percent change between years of everything except year
-percentMax <- matrix(NA, nrow=265, ncol= 8) 
+percentMax <- matrix(NA, nrow=length(emissions), ncol= lenght(emissions)) 
 
 for(i in 2:ncol(emissions)){
   for(j in 2:nrow(emissions)){
-    percentMax[j, i] <- (((emissions[(j - 1), i])-emissions[j, i]) - emissions[j,i]) * 100
+    percentMax[j, i] <- (((emissions[(j - 1), i])-emissions[j, i]) / emissions[j,i]) * 100
   }
 }
+
+write.csv(percentMax, file="emissonsPercentDifference_lab04.csv", row.names = FALSE)
