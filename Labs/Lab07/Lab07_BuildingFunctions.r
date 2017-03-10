@@ -51,14 +51,16 @@ X <- matrix( c(0, 1, 1, 1, 0, 0, 1, 0, 0), nrow=3, ncol=3) #adjecency matrix
 
 Matrix2Pairwise <- function(X){ #start of fuction, calls matrix
   NotZero <- which(X != 0)      #find all the non-zeros in matrix
-  Pairwise <- matrix(rep(1, (length(NotZero)*3)), ncol=3) #makes new pairwise matrix container
+  Pairwise <- matrix(data=1, nrow=length(NotZero), ncol=3) #makes new pairwise matrix container
   colnames(Pairwise) <- c("Row", "Column", "Value")   #Addes column names to pairwise matrix
+  k <- 1
   for(i in 1:ncol(X)){    #start for loop to run through all the cols of matrix
     for(j in 1:nrow(X)){  #continue down the runs
-      if(X[i,j] != 0){    #if value is not zero add to pairwise matrix
-      Pairwise[Column] <- i  #Takes i and add it to Column in pairwise
-      Pairwise[Row] <- j     #Takes j and add it to Row in pairwise
-      Pairwise[Value] <- [i, j] ##Takes value in i,j and adds it to pairwise
+      if(X[j, i] != 0){    #if value is not zero add to pairwise matrix
+        Pairwise[k,"Column"] <- i  #Takes i and add it to Column in pairwise
+        Pairwise[k,"Row"] <- j     #Takes j and add it to Row in pairwise
+        Pairwise[k,"Value"] <- X[j, i] ##Takes value in i,j and adds it to pairwise
+        k <- k+1
       }
     }
     
@@ -67,3 +69,12 @@ Matrix2Pairwise <- function(X){ #start of fuction, calls matrix
   return(Pairwise) #returns pairwise matrix
 }
 
+Y <- Matrix2Pairwise(X)
+Y
+
+Pairwise2Matrix <- function(Y){
+  NewX <- matrix(data=1, nrow=max(Y[,1]) , ncol=max(Y[,2]))
+  
+  
+  return(NewX)
+}
