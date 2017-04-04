@@ -2,22 +2,22 @@
 
 #Wrire a function that runs the fibonacci sequence
 
-fibonacci <- function(firstNum=0, secNum=1, time=10){ #startNum is the starting number & t is how to to run
+fibonacci <- function(firstNum=0, time=10){ #startNum is the starting number & t is how to to run
   n <- rep(1, time) #makes a container to hold all the numbers
   n[1] <- firstNum #assign the first number into vector
-  n[2] <- secNum  #assign the second number into vector
-  for(i in 2:length(n)){ #start a for loop 
-    n[i +1] <- n[i] + n[i -1] #the fibonacci equation 
+    if(firstNum < 0 | firstNum > 1){
+    print("Error with input number. The first number must be 0 or 1.")
+    } else {
+      for(i in 2:(length(n) -1) ){ #start a for loop 
+        n[i +1] <- n[i] + n[i - 1] #the fibonacci equation 
+    }
+    return(n) #return all numbers
   }
-  
-  return(n) #return all numbers
 }
 
-fibonacci(1, 1, 10) #function starting with 1, 1
-fibonacci(4, 5, 10)  #function starting with numbers greater than 3
-fibonacci(-4, -5, 10)  #function starting with negative numbers 
-
-fibonacci(0.1, 0.1, 10) #function starting with non-whole numbers 
+fibonacci(1, 10) #function starting with 1
+fibonacci(4, 10)  #function starting with numbers greater than 3
+fibonacci(-4, 10)  #function starting with negative numbers 
 
 #Problem 2-- Write an descrete-time logistic growth model
 #Equation for model- 
