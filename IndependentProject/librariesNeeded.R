@@ -1,1 +1,11 @@
 Load (or install need packages)
+
+library(plotrix)
+library(sp)
+library(maptools)
+library(maps)
+library(raster)
+library(rgdal)
+library(mapproj)
+library(dismo)
+library(maptools)

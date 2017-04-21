@@ -6,7 +6,7 @@ This will give a foundation in understanding how different species interact with
 to other questions like: How is self-incompatibility and unilateral compatibility maintained in allopatric and sympatric populations.
 
 #### The data:
-The raw data has been downloaded from [SIENet] (http://swbiodiversity.org/seinet/collections/list.php?taxa=Physalis&thes=1&type=1&db=all&page=1). SIENet
+The raw data has been downloaded from [SIENet](http://swbiodiversity.org/seinet/collections/list.php?taxa=Physalis&thes=1&type=1&db=all&page=1). SIENet
 is an onlinedata base that aggreates different herbarium collections online. I will be down loading all the data points for plants in the *physalis* genus and cvs.
 containsThis cvs has 13543 rows (total number of accessions miss the header) and 66 colunms which contains the different information of each species.
 Row 1: Column Headers  
@@ -18,7 +18,7 @@ id	institutionCode	collectionCode	ownerInstitutionCode	basisOfRecord	occurrenceI
 		There is three different genus that will be filtered: P. crassifolia, P. philadelphica, P. virginiana, P. heterophylla
 	b.) Filter to only have long/lat  
 		i.)	Remove all individuals that do not have long/lat information  
-2.) Using [Dismo tutorial] (https://cran.r-project.org/web/packages/dismo/vignettes/sdm.pdf) from R run through Maxent niche modeling  
+2.) Using [Dismo tutorial](https://cran.r-project.org/web/packages/dismo/vignettes/sdm.pdf) from R run through Maxent niche modeling  
 	a.) Maxent is a alogerathim that mathematical models that predicts the geographical distrubition of the species based on locality points and climate data (temperature, precipitation, soil type, ect.)
 3.) Make this whole process a for-loop so multiple species can be done.
 
