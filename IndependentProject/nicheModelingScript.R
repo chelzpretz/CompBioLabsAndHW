@@ -38,21 +38,17 @@ for( i in 1:length(desiredSpp)){ #start for-loop to loop through desiredSpp
 ############  Part 2: Plot out location points #######################
 
 #Need map the shows US amd mexico 
-data("wrld_simpl")
+data("wrld_simpl") # read in map information 
 
-
-#Read in occurance points 
 for(i in 1:length(desiredSpp)){
-  data <- read.csv(paste(desiredSpp[i], "LongLat.csv")) 
-  plot(wrld_simpl, xlim = c(-115, -95), ylim=c(15, 50))
-  axis(1)
-  axis(2)
-  points(data[,1], data[,2], col="green", pch=2)
-  }
+  data <- read.csv(paste(desiredSpp[i], "LongLat.csv")) #Read in occurance points 
+  pdf(paste(desiredSpp[i], ".pdf"), width=7, height=7)
+  plot(wrld_simpl, xlim = c(-115, -95), ylim=c(15, 50), main= (desiredSpp[i])) #plot points on map
+  points(data[,2], data[,1], col="green", pch=2)
+  dev.off()
+}
 
 
-
-#plot points on map
 
 ######################################################################
 ######### Part 3: Maxent Niche Modeling   ############################
