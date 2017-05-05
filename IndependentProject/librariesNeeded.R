@@ -1,11 +1,6 @@
-#Load (or install need packages)
+#Load (or install) needed packages and data
 
-library(plotrix)
-library(sp)
-library(maptools)
-library(maps)
-library(raster)
-library(rgdal)
-library(mapproj)
 library(dismo)
 library(maptools)
+data(wrld_simpl)
+library(rJava)
