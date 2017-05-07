@@ -76,32 +76,35 @@ for (i in 1:length(desiredSpp)){
   # make occurance points long/lat
   data <-subset(data, select=c("decimalLongitude", "decimalLatitude"))
   #This is just the area for a species spp. 
-  NAm <- extent(min(data[,1])-1, max(data[,1])+5, min(data[,2])-1, max(data[,2])+5) 
+  NAm <- extent(min(data[,1])-1, max(data[,1])+10, min(data[,2])-1, max(data[,2])+7) 
   #reading in environmental data 
   setwd("/Users/Chelsea/Documents/CompBioClass/ComputationalBiology/IndependentProject/layers/")
   bio1 <- crop(bio1_l, NAm) #crops the imported raster
-  writeRaster(bio1, "bio1.asc", format="ascii") #this writes the raster
+  writeRaster(bio1, "bio1.asc", format="ascii", overwrite=TRUE) #this writes the raster
   bio2 <- crop(bio2_l, NAm)
-  writeRaster(bio2, "bio2.asc", format="ascii")
+  writeRaster(bio2, "bio2.asc", format="ascii", overwrite=TRUE)
   bio5 <- crop(bio5_l, NAm)
-  writeRaster(bio5, "bio5.asc", format="ascii")
+  writeRaster(bio5, "bio5.asc", format="ascii", overwrite=TRUE)
   bio12 <- crop(bio12_l, NAm)
-  writeRaster(bio12, "bio12.asc", format="ascii")
+  writeRaster(bio12, "bio12.asc", format="ascii", overwrite=TRUE)
   bio16 <- crop(bio16_l, NAm)
-  writeRaster(bio16, "bio16.asc", format="ascii")
+  writeRaster(bio16, "bio16.asc", format="ascii", overwrite=TRUE)
   bio18 <- crop(bio18_l, NAm)
-  writeRaster(bio18, "bio18.asc", format="ascii")
+  writeRaster(bio18, "bio18.asc", format="ascii",overwrite=TRUE)
   bio20 <- crop(bio20_l, NAm)
-  writeRaster(bio20, "bio20.asc", format="ascii")
+  writeRaster(bio20, "bio20.asc", format="ascii", overwrite=TRUE)
   bio21 <- crop(bio21_l, NAm)
-  writeRaster(bio21, "bio21.asc", format="ascii")
+  writeRaster(bio21, "bio21.asc", format="ascii", overwrite=TRUE)
   bio22 <- crop(bio22_l, NAm)
-  writeRaster(bio22, "bio22.asc", format="ascii")
+  writeRaster(bio22, "bio22.asc", format="ascii", overwrite=TRUE)
   bio23 <- crop(bio23_l, NAm)
-  writeRaster(bio23, "bio23.asc", format="ascii")
+  writeRaster(bio23, "bio23.asc", format="ascii", overwrite=TRUE)
   bio24 <- crop(bio24_l, NAm)
-  writeRaster(bio24, "bio24.asc", format="ascii")
+  writeRaster(bio24, "bio24.asc", format="ascii", overwrite=TRUE)
+  
+  
   setwd("C:/Users/Chelsea/Documents/CompBioClass/ComputationalBiology/IndependentProject/")
+  
   ###This stacks all the non-corralated layers 
   layers <- stack(bio20, bio21, bio22, bio23, bio24)
   predictors_selected <- stack(bio1, bio2, bio5, bio12, bio16, bio18)
@@ -110,20 +113,21 @@ for (i in 1:length(desiredSpp)){
   
   
   #create a mask layer so the model knows which parts are to be used (land) and which aren't (water). It uses one (any) of the layers in the raster stack, in this case layer 1
-  mask <- raster(predictors_selected_11)
+  mask <- raster(predictors_selected_11, 1)
   
   #object that will be used for plotting the maps with the mask, extent, background points and presence points
-  r <- raster(predictors_selected)
+  r <- raster(predictors_selected_11, 1)
+  
   #extract varibale values for all locations
   presvals_sp <- extract(predictors_selected_11, data)
   #check if there are NAs, some percentage of the total is ok (less than 10%)
   #sum of both values (result from the next 2 commands) divided by the number of layers should give you the number of location points
   #this number should be the same as the one maxent will warn you about
-  sum(is.na(presvals_sp))
-  sum(!is.na(presvals_sp))
-  presvals_sp <- na.omit(presvals_sp)
+  print(sum(is.na(presvals_sp)))
+  print(sum(!is.na(presvals_sp)))
+  
   #set seed for random point generator
-  set.seed(1)
+  set.seed(50)
   # to avoid sampling bais -- select random points 
   bg <- randomPoints(mask, 200, ext=NAm, excludep=FALSE, extf=1)
   absvals_sp <- extract(predictors_selected_11, bg)
@@ -157,27 +161,38 @@ for (i in 1:length(desiredSpp)){
   jar <- paste(system.file(package="dismo"), "C:/Users/Chelsea/Documents/R/win-library/3.1/dismo/java/maxent/maxent.jar", sep='')
   
   #estimate the model
-  mx_sp <- maxent(predictors_selected_11, pres_train_sp, a=backg_train_sp) #, factors=NULL, removeDuplicates=TRUE)
+  mx_sp <- maxent(predictors_selected_11, pres_train_sp, a=backg_train_sp , factors=NULL, removeDuplicates=TRUE)
+  
+  print(paste("MAXENT stated for", desiredSpp[i], sep=" "))
   
   #plot variable contribution
   pdf(file=paste(desiredSpp[i], "VariableContribution.pdf", sep="_"))
   plot(mx_sp)
   dev.off()
   
+  print(paste("MAXENT plotted variable contribution", desiredSpp[i], sep=" "))
+  
   #plot variable response plots
   pdf(file=paste(desiredSpp[i], "VariableResponses.pdf", sep="_"), width=15, height=15)
   response(mx_sp)
   dev.off()
+
+  print(paste("MAXENT variable response plots", desiredSpp[i], sep=" "))
   
   #evaluate the model
   e <- dismo::evaluate(pres_test_sp, backg_test_sp, mx_sp, predictors_selected_11)
+  
   #save evaluation results
   sink(paste(desiredSpp[i], "Maxent_ModelEval.txt", sep="_"))
   e
   sink()
   
+  print(paste("MAXENT evaluate the model", desiredSpp[i], sep=" "))
+  
   #apply model
-  px_sp <- predict(predictors_selected_11, mx_sp, ext=NAm, progress='')
+  px_sp <- predict(predictors_selected_11, mx_sp, ext=(NAm + 1), progress='')
+  
+  print(paste("MAXENT applied model", desiredSpp[i], sep=" "))
   
   #plot model results
   pdf(file=paste(desiredSpp[i], "Maxent_PredictionThreshold.pdf", sep="_"), width=17, height=10)
@@ -187,55 +202,13 @@ for (i in 1:length(desiredSpp)){
   tr_sp <- threshold(e, 'spec_sens')
   plot(px_sp > tr_sp, main='presence/absence')
   plot(wrld_simpl, add=TRUE, border='dark grey',xlim=c(-115,-95),ylim=c(15,50))
-  points(sp, pch='+')
+  points(data, pch='+')
   dev.off()
+  
+  print(paste("MAXENT plotted model results", desiredSpp[i], sep=" "))
   
   save.image(file=paste(desiredSpp[i], "Maxent.RData", sep="_"))
   
   print(paste("MAXENT is done for", desiredSpp[i], sep=" "))
-  
-  ##### STEP 3: GLM #####
-  train_sp <- rbind(pres_train_sp, backg_train_sp)
-  pb_train_sp <- c(rep(1, nrow(pres_train_sp)), rep(0, nrow(backg_train_sp)))
-  envtrain_sp <- extract(predictors_selected_11, train_sp)
-  envtrain_sp <- data.frame(cbind(pa=pb_train_sp, envtrain_sp))
-  head(envtrain_sp)
-  
-  testpres_sp <- data.frame(extract(predictors_selected_11, pres_test_sp))
-  testbackg_sp <- data.frame(extract(predictors_selected_11, backg_test_sp))
-  
-  #estimate the model
-  glm_sp <- glm(envtrain_sp$pa ~ 
-                  Altitude + Annual.Mean.Temperature + Mean.Temperature.Warmest.Quarter + Annual.Precipitation + Precipitation.Seasonality + Precipitation.Driest.Quarter + Precipitation.Warmest.Quarter + Mean.Diurnal.Range + Soil.Organic.Carbon.0.3m + Soil.Organic.Carbon.0m + Soil.pH.0m , family = gaussian(link = "identity"), data=envtrain_sp)
-  
-  #save model results
-  sink(paste(desiredSpp[i], "GLM_summary.txt", sep="_"))
-  summary(glm_sp)
-  sink()
-  
-  #evaluate the model
-  glm_eval_sp <- dismo::evaluate(testpres_sp, testbackg_sp, glm_sp)
-  sink(paste(desiredSpp[i], "GLM_ModelEval.txt", sep="_"))
-  glm_eval_sp
-  sink()
-  
-  #apply model
-  pg_sp <- dismo::predict(predictors_selected_11, glm_sp, ext=NAm)
-  
-  #plot model results
-  pdf(file=paste(desiredSpp[i], "GLM_PredictionThreshold.pdf", sep="_"), width=17, height=10)
-  par(mfrow=c(1,2))
-  plot(pg_sp, main="GLM/gaussian, raw values")
-  plot(wrld_simpl, add=TRUE, border="dark grey")
-  tr_sp <- threshold(glm_eval_sp, "spec_sens")
-  plot(pg_sp > tr_sp, main="presence/absence")
-  plot(wrld_simpl, add=TRUE, border="dark grey")
-  points(sp, pch="+")
-  dev.off()
-  
-  save.image(file=paste(desiredSpp[i], "GLM.RData", sep="_"))
-  
-  print(paste("GLM is done for", desiredSpp[i], sep=" "))
-  
 }
 
